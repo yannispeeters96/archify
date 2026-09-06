@@ -112,7 +112,7 @@ To try it without a permanent install:
 npx skills use tt-a1i/archify@archify --agent codex
 ```
 
-The [agent switcher](https://tt-a1i.github.io/archify/start.html?agent=cursor&type=architecture) covers `cursor`, `codex`, `claude-code`, and `opencode`. For Raven's manual ZIP install, extract [`archify.zip`](archify.zip) into `~/.raven/workspace/skills`; it yields `~/.raven/workspace/skills/archify`. Raven is not a switcher target.
+The [agent switcher](https://tt-a1i.github.io/archify/start.html?agent=cursor&type=architecture) covers `cursor`, `codex`, `claude-code`, and `opencode`. For Raven's manual ZIP install, extract [`archify.zip`](archify.zip) into `~/.raven/workspace/skills`; it yields `~/.raven/workspace/skills/archify`. On Windows, each GitHub release also ships `archify-windows-installer-vX.Y.Z.exe`, which installs the packaged skill into `%USERPROFILE%\.raven\workspace\skills\archify`, writes `archify-uninstall.exe` beside it, and backs up any previous install to `archify.backup`. Raven is not a switcher target.
 
 ### 2. Ask for one bounded view
 
@@ -258,6 +258,7 @@ The complete generation and viewer contract lives in [`archify/SKILL.md`](archif
 | Surface | Install location or method | Capability |
 |---|---|---|
 | **Raven** | Manual ZIP into `~/.raven/workspace/skills` → `~/.raven/workspace/skills/archify` | Full renderer + validation workflow |
+| **Windows (Raven)** | Run `archify-windows-installer-vX.Y.Z.exe`; installs to `%USERPROFILE%\.raven\workspace\skills\archify`, writes `archify-uninstall.exe`, and keeps the previous package in `archify.backup` during upgrades | Full renderer + validation workflow |
 | **Claude Code** | `~/.claude/skills/` or `.claude/skills/` | Full renderer + validation workflow |
 | **Codex CLI** | `~/.agents/skills/` or `.agents/skills/` | Full renderer + validation workflow |
 | **opencode** | `~/.config/opencode/skills/`, `.opencode/skills/`, or `.agents/skills/` | Full renderer + validation workflow |

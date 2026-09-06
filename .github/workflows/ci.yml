@@ -90,3 +90,26 @@ jobs:
           Expand-Archive -Path archify.zip -DestinationPath $packageRoot
       - name: Validate packaged skill without installing dependencies
         run: node scripts/package-smoke.mjs
+      - name: Install NSIS
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: choco install nsis -y --no-progress
+      - name: Build Windows installer
+        if: runner.os == 'Windows'
+        id: windows-installer
+        shell: pwsh
+        run: |
+          $installer = Join-Path $env:RUNNER_TEMP 'archify-windows-installer.exe'
+          node scripts/build-windows-installer.mjs $installer
+          "installer=$installer" >> $env:GITHUB_OUTPUT
+      - name: Smoke-test the Windows installer
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $installRoot = Join-Path $env:RUNNER_TEMP 'archify-installed'
+          Start-Process -FilePath '${{ steps.windows-installer.outputs.installer }}' -ArgumentList '/S', "/D=$installRoot" -Wait -NoNewWindow
+          node scripts/package-smoke.mjs $installRoot
+          $uninstaller = Join-Path $env:RUNNER_TEMP 'archify-uninstall.exe'
+          if (-not (Test-Path $uninstaller)) { throw 'installer did not create the expected uninstaller' }
+          Start-Process -FilePath $uninstaller -ArgumentList '/S' -Wait -NoNewWindow
+          if (Test-Path $installRoot) { throw 'installer uninstall did not remove the installed package' }
