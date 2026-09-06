@@ -108,7 +108,7 @@ npx -y skills add tt-a1i/archify --skill archify --agent cursor --global --copy 
 npx skills use tt-a1i/archify@archify --agent codex
 ```
 
-[Agent 切换器](https://tt-a1i.github.io/archify/start.html?agent=cursor&type=architecture)只为 `cursor`、`codex`、`claude-code` 和 `opencode` 生成命令。Raven 仍支持 ZIP 手动安装：将 [`archify.zip`](archify.zip) 解压到 `~/.raven/workspace/skills`，解压后会得到 `~/.raven/workspace/skills/archify`。Windows 用户还可以使用每个 GitHub Release 附带的 `archify-windows-installer-vX.Y.Z.exe`，它会把技能安装到 `%USERPROFILE%\.raven\workspace\skills\archify`，在同级目录写入 `archify-uninstall.exe`，并在升级前把旧版本备份到 `archify.backup`；Raven 不属于切换器目标。
+[Agent 切换器](https://tt-a1i.github.io/archify/start.html?agent=cursor&type=architecture)只为 `cursor`、`codex`、`claude-code` 和 `opencode` 生成命令。Raven 仅支持 ZIP 手动安装：将 [`archify.zip`](archify.zip) 解压到 `~/.raven/workspace/skills`，解压后会得到 `~/.raven/workspace/skills/archify`；Raven 不属于切换器目标。
 
 ### 2. 先画一个边界清楚的视图
 
@@ -252,8 +252,7 @@ node bin/archify.mjs deliver workflow examples/agent-tool-call.workflow.json /tm
 
 | 使用位置 | 安装位置或方法 | 能力 |
 |---|---|---|
-| **Raven** | ZIP 手动安装：将 `archify.zip` 解压到 `~/.raven/workspace/skills`，解压后会得到 `~/.raven/workspace/skills/archify` | 完整 Renderer + Validation 工作流 |
-| **Windows（Raven）** | 运行 `archify-windows-installer-vX.Y.Z.exe`；安装到 `%USERPROFILE%\.raven\workspace\skills\archify`，写入 `archify-uninstall.exe`，并在升级时把上一份包保留到 `archify.backup` | 完整 Renderer + Validation 工作流 |
+| **Raven** | ZIP 手动安装：将 `archify.zip` 解压到 `~/.raven/workspace/skills`，解压后会得到 `~/.raven/workspace/skills/archify`；Windows Release 也提供 `archify-windows-installer-vX.Y.Z.exe` 安装到同一目标 | 完整 Renderer + Validation 工作流 |
 | **Claude Code** | `~/.claude/skills/` 或 `.claude/skills/` | 完整 Renderer + Validation 工作流 |
 | **Codex CLI** | `~/.agents/skills/` 或 `.agents/skills/` | 完整 Renderer + Validation 工作流 |
 | **opencode** | `~/.config/opencode/skills/`、`.opencode/skills/` 或 `.agents/skills/` | 完整 Renderer + Validation 工作流 |

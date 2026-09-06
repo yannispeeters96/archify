@@ -34,9 +34,9 @@ if (!stageDir) {
 
 fs.mkdirSync(path.dirname(outputFile), { recursive: true });
 const nsisResult = spawnSync('makensis', [
-  `/DARCHIFY_STAGE_DIR=${nsisPath(stageDir)}`,
-  `/DARCHIFY_OUTPUT_FILE=${nsisPath(outputFile)}`,
-  `/DARCHIFY_VERSION=${version}`,
+  `-DARCHIFY_STAGE_DIR=${nsisPath(stageDir)}`,
+  `-DARCHIFY_OUTPUT_FILE=${nsisPath(outputFile)}`,
+  `-DARCHIFY_VERSION=${version}`,
   nsisScript,
 ], {
   cwd: repoRoot,
