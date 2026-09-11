@@ -19,6 +19,7 @@
     "build:guide": "node ../scripts/build-guide.mjs ../docs/guide.html",
     "build:start": "node ../scripts/build-start.mjs ../docs/start.html",
     "build:readme-showcase": "node ../scripts/build-readme-showcase.mjs",
+    "build:windows-installer": "node ../scripts/build-windows-installer.mjs",
     "test:webm": "node test/webm-artifact.smoke.mjs",
     "test": "npm run check:validators && npm run check:release-identity && node test/golden.mjs && node ../scripts/run-tests.mjs",
     "render:examples": "node scripts/render-examples.mjs ../examples"

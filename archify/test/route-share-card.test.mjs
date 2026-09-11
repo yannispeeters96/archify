@@ -157,7 +157,9 @@ test('skill and READMEs describe the optional Export variant and show one real c
   assert.equal(png.readUInt32BE(20), 630);
 
   const buildZip = fs.readFileSync(path.join(repoRoot, 'scripts/build-zip.sh'), 'utf8');
-  assert.match(buildZip, /--exclude '\.validator-check-\*'/, 'concurrent validator scratch must never leak into archify.zip');
+  const stagePackage = fs.readFileSync(path.join(repoRoot, 'scripts/stage-package.mjs'), 'utf8');
+  assert.match(buildZip, /stage-package\.mjs/, 'archify.zip must be staged through the shared package copier');
+  assert.match(stagePackage, /\.validator-check-/, 'concurrent validator scratch must never leak into archify.zip');
 });
 
 process.on('exit', () => fs.rmSync(tmp, { recursive: true, force: true }));

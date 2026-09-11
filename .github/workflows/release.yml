@@ -79,3 +79,34 @@ jobs:
           generate_release_notes: true
           prerelease: ${{ steps.release-kind.outputs.prerelease }}
           make_latest: ${{ steps.release-kind.outputs.make_latest }}
+
+  windows-installer:
+    name: Release Windows installer
+    needs: release
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install NSIS
+        shell: pwsh
+        run: choco install nsis -y --no-progress
+      - name: Build Windows installer
+        id: build-installer
+        shell: pwsh
+        run: |
+          $version = node -p "require('./archify/package.json').version"
+          $installer = Join-Path $env:RUNNER_TEMP "archify-windows-installer-v$version.exe"
+          node scripts/build-windows-installer.mjs $installer
+          "installer=$installer" >> $env:GITHUB_OUTPUT
+      - name: Smoke-test the silent installer
+        shell: pwsh
+        run: |
+          $installRoot = Join-Path $env:RUNNER_TEMP 'archify-installed'
+          Start-Process -FilePath '${{ steps.build-installer.outputs.installer }}' -ArgumentList '/S', "/D=$installRoot" -Wait -NoNewWindow
+          node scripts/package-smoke.mjs $installRoot
+      - name: Attach Windows installer to the GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ steps.build-installer.outputs.installer }}
